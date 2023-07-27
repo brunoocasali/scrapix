@@ -21,7 +21,7 @@ class Server {
     this.app.post('/crawl/sync', this.__syncCrawl.bind(this))
 
     this.app.listen(port, () =>
-      console.log(`Example app listening on port ${port}!`)
+      console.log(`Crawler app listening on port ${port}!`)
     )
   }
 

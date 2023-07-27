@@ -2,13 +2,13 @@
 version: '3'
 
 services:
-  scrapix:
-    image: scrapix:latest
-    restart: always
-    ports:
-      - 8080:8080
-    environment:
-      - REDIS_URL=redis://redis:6379
+  # scrapix:
+  #   image: scrapix:latest
+  #   restart: always
+  #   ports:
+  #     - 8080:8080
+  #   environment:
+  #     - REDIS_URL=redis://redis:6379
 
   meilisearch:
     image: getmeili/meilisearch:latest

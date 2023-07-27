@@ -1,0 +1,15 @@
+config/
+misc/
+playground/
+src/
+storage/
+node_modules/
+.github/
+CONTRIBUTING.md
+README.md
+Dockerfile
+.eslintignore
+.eslintrc.cjs
+docker-compose.yml
+tsconfig.eslint.json
+tsconfig.json

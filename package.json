@@ -30,7 +30,8 @@
     "playground:start": "yarn --cwd playground/docusaurus && yarn --cwd playground/docusaurus start",
     "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1"
   },
-  "author": "It's not you it's me",
+  "author": "brunoocasali",
+  "private": false,
   "license": "ISC",
   "devDependencies": {
     "@apify/log": "^2.1.3",
