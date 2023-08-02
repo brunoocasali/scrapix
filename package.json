@@ -1,6 +1,6 @@
 {
   "name": "@brunoocasali/scrapix",
-  "version": "0.0.6",
+  "version": "0.0.12",
   "description": "This is an example of a Crawlee project.",
   "main": "dist/src/index.js",
   "dependencies": {

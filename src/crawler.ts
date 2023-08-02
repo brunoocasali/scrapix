@@ -11,6 +11,7 @@ import SchemaScraper from './scrapers/schema'
 import { Sender } from './sender'
 import { Config, Scraper } from './types'
 import { Webhook } from './webhook.js'
+import puppeteer from 'puppeteer-core'
 
 type DefaultHandler = Parameters<
   Parameters<Router<PuppeteerCrawlingContext>['addDefaultHandler']>[0]
@@ -29,7 +30,11 @@ export class Crawler {
   nb_page_crawled = 0
   nb_page_indexed = 0
 
-  constructor(sender: Sender, config: Config) {
+  constructor(
+    sender: Sender,
+    config: Config,
+    launchOptions: Record<string, any> = {}
+  ) {
     console.info('Crawler::constructor')
     this.sender = sender
     this.config = config
@@ -57,7 +62,9 @@ export class Crawler {
           headless: config.headless || true,
           args: ['--no-sandbox', '--disable-setuid-sandbox'],
           ignoreDefaultArgs: ['--disable-extensions'],
+          ...launchOptions,
         },
+        launcher: puppeteer,
       },
     })
   }
@@ -77,6 +84,8 @@ export class Crawler {
     }, interval)
 
     await this.crawler.run(this.urls)
+
+    // Stuck here
 
     clearInterval(intervalId)
 

@@ -62,9 +62,9 @@ class Server {
   }
 
   async __startCrawl(req: express.Request, res: express.Response) {
+    res.send('Crawling started')
     await Webhook.get().started(req.body)
     console.log('Crawling started')
-    res.send('Crawling started')
 
     const sender = new Sender(req.body)
     await sender.init()
@@ -84,3 +84,13 @@ class Server {
 }
 
 new Server()
+// "requestAvgFailedDurationMillis": null,
+// "requestAvgFinishedDurationMillis": 862,
+// "requestsFinishedPerMinute": 22,
+// "requestsFailedPerMinute": 0,
+// "requestTotalDurationMillis": 18973,
+// "requestsTotal": 22,
+// "crawlerRuntimeMillis": 60051,
+// "retryHistogram": [
+//     22
+// ]
