@@ -3,6 +3,7 @@ import {
   PuppeteerCrawler,
   Router,
   PuppeteerCrawlingContext,
+  PuppeteerCrawlerOptions,
 } from 'crawlee'
 import { minimatch } from 'minimatch'
 import DefaultScraper from './scrapers/default'
@@ -11,7 +12,7 @@ import SchemaScraper from './scrapers/schema'
 import { Sender } from './sender'
 import { Config, Scraper } from './types'
 import { Webhook } from './webhook.js'
-import puppeteer from 'puppeteer-core'
+import { PuppeteerNode } from 'puppeteer-core'
 
 type DefaultHandler = Parameters<
   Parameters<Router<PuppeteerCrawlingContext>['addDefaultHandler']>[0]
@@ -33,7 +34,8 @@ export class Crawler {
   constructor(
     sender: Sender,
     config: Config,
-    launchOptions: Record<string, any> = {}
+    launchOptions: Record<string, any> = {},
+    launcher?: PuppeteerNode
   ) {
     console.info('Crawler::constructor')
     this.sender = sender
@@ -53,9 +55,7 @@ export class Crawler {
     // type DefaultHandler = Parameters<typeof router.addDefaultHandler>[0];
     router.addDefaultHandler(this.defaultHandler.bind(this))
 
-    // create the crawler
-    this.crawler = new PuppeteerCrawler({
-      // proxyConfiguration: new ProxyConfiguration({ proxyUrls: ['...'] }),
+    const puppeteerCrawlerOptions: PuppeteerCrawlerOptions = {
       requestHandler: router,
       launchContext: {
         launchOptions: {
@@ -64,9 +64,14 @@ export class Crawler {
           ignoreDefaultArgs: ['--disable-extensions'],
           ...launchOptions,
         },
-        launcher: puppeteer,
       },
-    })
+    }
+
+    if (puppeteerCrawlerOptions.launchContext && launcher) {
+      puppeteerCrawlerOptions.launchContext.launcher = launcher
+    }
+    // create the crawler
+    this.crawler = new PuppeteerCrawler(puppeteerCrawlerOptions)
   }
 
   async run() {
